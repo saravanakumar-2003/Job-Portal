@@ -4,8 +4,11 @@ import com.example.Job.portal.DTO.CandidateDTO;
 import com.example.Job.portal.Entity.CandidateEntity;
 import com.example.Job.portal.Repository.CandidateRepository;
 import jakarta.persistence.Access;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 @Service
 public class CandidateService {
@@ -35,4 +38,5 @@ public class CandidateService {
             return "user not found. Please register";
         }
     }
+
 }
