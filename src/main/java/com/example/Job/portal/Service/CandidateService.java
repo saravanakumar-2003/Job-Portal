@@ -1,6 +1,7 @@
 package com.example.Job.portal.Service;
 
 import com.example.Job.portal.DTO.CandidateDTO;
+import com.example.Job.portal.DTO.UpdateSkillsDTO;
 import com.example.Job.portal.Entity.CandidateEntity;
 import com.example.Job.portal.Repository.CandidateRepository;
 import jakarta.persistence.Access;
@@ -39,4 +40,8 @@ public class CandidateService {
         }
     }
 
+    @Transactional
+    public void updateSkills(UpdateSkillsDTO updateSkillsDTO) {
+        candidateRepository.updateSkills(updateSkillsDTO.getEmail(), updateSkillsDTO.getSkills());
+    }
 }

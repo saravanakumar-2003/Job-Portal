@@ -13,5 +13,8 @@ import java.util.ArrayList;
 public interface CandidateRepository extends JpaRepository<CandidateEntity, Integer> {
     CandidateEntity findByEmail(String email);
 
+    @Modifying
+    @Query("UPDATE CandidateEntity ce SET ce.skills = :skills WHERE ce.email = :email")
+    void updateSkills(@Param("email") String email,@Param("skills") ArrayList<String> skills);
 
 }

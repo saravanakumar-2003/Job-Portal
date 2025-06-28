@@ -1,6 +1,7 @@
 package com.example.Job.portal.Controller;
 
 import com.example.Job.portal.DTO.CandidateDTO;
+import com.example.Job.portal.DTO.UpdateSkillsDTO;
 import com.example.Job.portal.Service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,9 @@ public class CandidateController {
         candidateService.login(email);
     }
 
-
+    @PutMapping("/updateSkills")
+    public void updateSkills(@RequestBody UpdateSkillsDTO updateSkillsDTO){
+        candidateService.updateSkills(updateSkillsDTO);
+    }
 
 }
