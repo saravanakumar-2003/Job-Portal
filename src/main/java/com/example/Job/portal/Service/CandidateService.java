@@ -1,9 +1,13 @@
 package com.example.Job.portal.Service;
 
+import com.example.Job.portal.DTO.AppliedJobsDTO;
 import com.example.Job.portal.DTO.CandidateDTO;
 import com.example.Job.portal.DTO.UpdateSkillsDTO;
+import com.example.Job.portal.Entity.AppliedJobsEntity;
 import com.example.Job.portal.Entity.CandidateEntity;
-import com.example.Job.portal.Repository.CandidateRepository;
+import com.example.Job.portal.Entity.CandidateSkillsEntity;
+import com.example.Job.portal.Entity.SkillsEntity;
+import com.example.Job.portal.Repository.*;
 import jakarta.persistence.Access;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +21,44 @@ public class CandidateService {
     @Autowired
     CandidateRepository candidateRepository;
 
+    @Autowired
+    JobRepository jobRepository;
+
+    @Autowired
+    AppliedJobRepository appliedJobRepository;
+
+    @Autowired
+    SkillsRepository skillsRepository;
+
+    @Autowired
+    CandidateSkillsRepository candidateSkillsRepository;
+
     public void register(CandidateDTO candidate) {
 
         CandidateEntity candidateEntity = new CandidateEntity();
         candidateEntity.setName(candidate.getName());
         candidateEntity.setEmail(candidate.getEmail());
         candidateEntity.setMobile(candidate.getMobile());
-        candidateEntity.setSkills(candidate.getSkills());
         candidateEntity.setExperience(candidate.getExperience());
-        candidateEntity.setLocations(candidate.getLocations());
+        candidateEntity.setLocation(candidate.getLocation());
 
         candidateRepository.save(candidateEntity);
+
+        for(String skill : candidate.getSkills()) {
+
+            if(skillsRepository.findBySkill(skill) == null){
+                SkillsEntity skillsEntity = new SkillsEntity();
+                skillsEntity.setSkill(skill);
+                skillsRepository.save(skillsEntity);
+            }
+
+            CandidateSkillsEntity candidateSkillsEntity = new CandidateSkillsEntity();
+            candidateSkillsEntity.setCandidateEntity(candidateEntity);
+            candidateSkillsEntity.setSkillsEntity(skillsRepository.findBySkill(skill));
+            candidateSkillsRepository.save(candidateSkillsEntity);
+        }
+
+
     }
 
     public String login(String email){
@@ -40,8 +71,27 @@ public class CandidateService {
         }
     }
 
+
+    public void applyJob(AppliedJobsDTO appliedJobsDTO) {
+        AppliedJobsEntity appliedJobsEntity = new AppliedJobsEntity();
+
+        appliedJobsEntity.setCandidateEntity(candidateRepository.findByEmail(appliedJobsDTO.getCandidateEmail()));
+        appliedJobsEntity.setJobId(appliedJobsDTO.getJobId());
+        appliedJobRepository.save(appliedJobsEntity);
+    }
+
     @Transactional
-    public void updateSkills(UpdateSkillsDTO updateSkillsDTO) {
-        candidateRepository.updateSkills(updateSkillsDTO.getEmail(), updateSkillsDTO.getSkills());
+    public void editSkills(UpdateSkillsDTO updateSkillsDTO) {
+
+        CandidateEntity candidate = candidateRepository.findByEmail(updateSkillsDTO.getEmail());
+        candidateSkillsRepository.deleteByCandidateEntity(candidate);
+
+        for(String skill : updateSkillsDTO.getSkills()){
+
+            CandidateSkillsEntity candidateSkillsEntity = new CandidateSkillsEntity();
+            candidateSkillsEntity.setCandidateEntity(candidate);
+            candidateSkillsEntity.setSkillsEntity(skillsRepository.findBySkill(skill));
+            candidateSkillsRepository.save(candidateSkillsEntity);
+        }
     }
 }

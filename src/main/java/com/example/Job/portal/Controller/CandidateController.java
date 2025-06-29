@@ -1,5 +1,6 @@
 package com.example.Job.portal.Controller;
 
+import com.example.Job.portal.DTO.AppliedJobsDTO;
 import com.example.Job.portal.DTO.CandidateDTO;
 import com.example.Job.portal.DTO.UpdateSkillsDTO;
 import com.example.Job.portal.Service.CandidateService;
@@ -25,9 +26,14 @@ public class CandidateController {
         candidateService.login(email);
     }
 
-    @PutMapping("/updateSkills")
-    public void updateSkills(@RequestBody UpdateSkillsDTO updateSkillsDTO){
-        candidateService.updateSkills(updateSkillsDTO);
+    @DeleteMapping("/editSkills")
+    public void editSkills(@RequestBody UpdateSkillsDTO updateSkillsDTO){
+        candidateService.editSkills(updateSkillsDTO);
+    }
+
+    @PostMapping("/applyJob")
+    public void applyJob(@RequestBody AppliedJobsDTO appliedJobsDTO){
+        candidateService.applyJob(appliedJobsDTO);
     }
 
 }

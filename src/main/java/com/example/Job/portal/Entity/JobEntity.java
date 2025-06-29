@@ -20,7 +20,7 @@ public class JobEntity {
     private ArrayList<String> skills;
 
     @Column
-    private ArrayList<String> locations;
+    private String location;
 
     @Column
     private int experience;
@@ -57,12 +57,12 @@ public class JobEntity {
         this.skills = skills;
     }
 
-    public ArrayList<String> getLocations() {
-        return locations;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocations(ArrayList<String> locations) {
-        this.locations = locations;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getExperience() {
@@ -92,11 +92,11 @@ public class JobEntity {
     public JobEntity() {
     }
 
-    public JobEntity(int id, String role, ArrayList<String> skills, ArrayList<String> locations, int experience, CompanyEntity companyEntity, RecruiterEntity recruiterEntity) {
+    public JobEntity(int id, String role, ArrayList<String> skills, String location, int experience, CompanyEntity companyEntity, RecruiterEntity recruiterEntity) {
         this.id = id;
         this.role = role;
         this.skills = skills;
-        this.locations = locations;
+        this.location = location;
         this.experience = experience;
         this.companyEntity = companyEntity;
         this.recruiterEntity = recruiterEntity;

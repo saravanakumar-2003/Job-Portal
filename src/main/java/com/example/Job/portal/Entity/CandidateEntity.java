@@ -23,26 +23,24 @@ public class CandidateEntity {
     private String mobile;
 
     @Column
-    private ArrayList<String> skills;
+    private int experience;
 
     @Column
-    private int experience;
+    public String location;
 
     public CandidateEntity() {
     }
 
-    public CandidateEntity(int id, String name, String email, String mobile, ArrayList<String> skills, int experience, ArrayList<String> locations) {
+    public CandidateEntity(int id, String name, String email, String mobile, int experience, String location) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.mobile = mobile;
-        this.skills = skills;
         this.experience = experience;
-        this.locations = locations;
+        this.location = location;
     }
 
-    @Column
-    public ArrayList<String> locations;
+
 
     public int getId() {
         return id;
@@ -76,14 +74,6 @@ public class CandidateEntity {
         this.mobile = mobile;
     }
 
-    public ArrayList<String> getSkills() {
-        return skills;
-    }
-
-    public void setSkills(ArrayList<String> skills) {
-        this.skills = skills;
-    }
-
     public int getExperience() {
         return experience;
     }
@@ -92,11 +82,11 @@ public class CandidateEntity {
         this.experience = experience;
     }
 
-    public ArrayList<String> getLocations() {
-        return locations;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocations(ArrayList<String> locations) {
-        this.locations = locations;
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

@@ -8,7 +8,7 @@ public class CandidateDTO {
     private String mobile;
     private int experience;
     private ArrayList<String> skills;
-    private ArrayList<String> locations;
+    private String location;
 
     public String getName() {
         return name;
@@ -50,23 +50,23 @@ public class CandidateDTO {
         this.skills = skills;
     }
 
-    public ArrayList<String> getLocations() {
-        return locations;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocations(ArrayList<String> locations) {
-        this.locations = locations;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public CandidateDTO() {
     }
 
-    public CandidateDTO(String name, String email, String mobile, int experience, ArrayList<String> skills, ArrayList<String> locations) {
+    public CandidateDTO(String name, String email, String mobile, int experience, ArrayList<String> skills, String location) {
         this.name = name;
         this.email = email;
         this.mobile = mobile;
         this.experience = experience;
         this.skills = skills;
-        this.locations = locations;
+        this.location = location;
     }
 }

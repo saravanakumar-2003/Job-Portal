@@ -58,7 +58,7 @@ public class RecruiterService {
         jobEntity.setRole(job.getRole());
         jobEntity.setExperience(job.getExperience());
         jobEntity.setSkills(job.getSkills());
-        jobEntity.setLocations(job.getLocations());
+        jobEntity.setLocation(job.getLocation());
 
         RecruiterEntity recruiter = recruiterRepository.findByEmail(job.getRecruiterEmail());
 

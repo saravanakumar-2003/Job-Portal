@@ -6,7 +6,7 @@ public class JobDTO {
 
     private String role;
     private ArrayList<String> skills;
-    private ArrayList<String> locations;
+    private String location;
     private int experience;
     private String recruiterEmail;
 
@@ -26,12 +26,12 @@ public class JobDTO {
         this.skills = skills;
     }
 
-    public ArrayList<String> getLocations() {
-        return locations;
+    public String getLocation() {
+        return location;
     }
 
-    public void setLocations(ArrayList<String> locations) {
-        this.locations = locations;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getExperience() {
@@ -53,10 +53,10 @@ public class JobDTO {
     public JobDTO() {
     }
 
-    public JobDTO(String role, ArrayList<String> skills, ArrayList<String> locations, int experience, String recruiterEmail) {
+    public JobDTO(String role, ArrayList<String> skills, String location, int experience, String recruiterEmail) {
         this.role = role;
         this.skills = skills;
-        this.locations = locations;
+        this.location = location;
         this.experience = experience;
         this.recruiterEmail = recruiterEmail;
     }
