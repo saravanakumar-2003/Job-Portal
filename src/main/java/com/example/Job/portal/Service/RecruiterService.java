@@ -2,12 +2,8 @@ package com.example.Job.portal.Service;
 
 import com.example.Job.portal.DTO.JobDTO;
 import com.example.Job.portal.DTO.RecruiterDTO;
-import com.example.Job.portal.Entity.CompanyEntity;
-import com.example.Job.portal.Entity.JobEntity;
-import com.example.Job.portal.Entity.RecruiterEntity;
-import com.example.Job.portal.Repository.CompanyRepository;
-import com.example.Job.portal.Repository.JobRepository;
-import com.example.Job.portal.Repository.RecruiterRepository;
+import com.example.Job.portal.Entity.*;
+import com.example.Job.portal.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +17,12 @@ public class RecruiterService {
 
     @Autowired
     JobRepository jobRepository;
+
+    @Autowired
+    SkillsRepository skillsRepository;
+
+    @Autowired
+    JobSkillsRepository jobSkillsRepository;
 
 
     public void register(RecruiterDTO recruiter) {
@@ -57,7 +59,6 @@ public class RecruiterService {
 
         jobEntity.setRole(job.getRole());
         jobEntity.setExperience(job.getExperience());
-        jobEntity.setSkills(job.getSkills());
         jobEntity.setLocation(job.getLocation());
 
         RecruiterEntity recruiter = recruiterRepository.findByEmail(job.getRecruiterEmail());
@@ -66,6 +67,20 @@ public class RecruiterService {
         jobEntity.setCompanyEntity(recruiter.getCompany());
 
         jobRepository.save(jobEntity);
+
+        for(String skill : job.getSkills()){
+
+            if(skillsRepository.findBySkill(skill) == null){
+                SkillsEntity skillsEntity = new SkillsEntity();
+                skillsEntity.setSkill(skill);
+                skillsRepository.save(skillsEntity);
+            }
+
+            JobSkillsEntity jobSkillsEntity = new JobSkillsEntity();
+            jobSkillsEntity.setJobEntity(jobRepository.findByRole(job.getRole()));
+            jobSkillsEntity.setSkillsEntity(skillsRepository.findBySkill(skill));
+            jobSkillsRepository.save(jobSkillsEntity);
+        }
     }
 }
 

@@ -9,10 +9,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+
 @Repository
 public interface CandidateSkillsRepository extends JpaRepository<CandidateSkillsEntity, Integer> {
 
     @Modifying
     @Query("DELETE from CandidateSkillsEntity WHERE candidateEntity = :candidate")
     void deleteByCandidateEntity(@Param("candidate") CandidateEntity candidate);
+
+    ArrayList<CandidateSkillsEntity> findAllByCandidateEntity(CandidateEntity byEmail);
 }

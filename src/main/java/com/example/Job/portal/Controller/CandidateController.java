@@ -2,6 +2,7 @@ package com.example.Job.portal.Controller;
 
 import com.example.Job.portal.DTO.AppliedJobsDTO;
 import com.example.Job.portal.DTO.CandidateDTO;
+import com.example.Job.portal.DTO.FindMatchDTO;
 import com.example.Job.portal.DTO.UpdateSkillsDTO;
 import com.example.Job.portal.Service.CandidateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,11 @@ public class CandidateController {
     @PostMapping("/applyJob")
     public void applyJob(@RequestBody AppliedJobsDTO appliedJobsDTO){
         candidateService.applyJob(appliedJobsDTO);
+    }
+
+    @PostMapping("/findMatch")
+    public float findMatch(@RequestBody FindMatchDTO findMatchDTO){
+        return candidateService.findMatch(findMatchDTO);
     }
 
 }

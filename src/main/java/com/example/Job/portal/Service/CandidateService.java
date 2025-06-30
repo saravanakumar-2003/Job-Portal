@@ -2,18 +2,18 @@ package com.example.Job.portal.Service;
 
 import com.example.Job.portal.DTO.AppliedJobsDTO;
 import com.example.Job.portal.DTO.CandidateDTO;
+import com.example.Job.portal.DTO.FindMatchDTO;
 import com.example.Job.portal.DTO.UpdateSkillsDTO;
-import com.example.Job.portal.Entity.AppliedJobsEntity;
-import com.example.Job.portal.Entity.CandidateEntity;
-import com.example.Job.portal.Entity.CandidateSkillsEntity;
-import com.example.Job.portal.Entity.SkillsEntity;
+import com.example.Job.portal.Entity.*;
 import com.example.Job.portal.Repository.*;
 import jakarta.persistence.Access;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Service
 public class CandidateService {
@@ -32,6 +32,9 @@ public class CandidateService {
 
     @Autowired
     CandidateSkillsRepository candidateSkillsRepository;
+
+    @Autowired
+    JobSkillsRepository jobSkillsRepository;
 
     public void register(CandidateDTO candidate) {
 
@@ -93,5 +96,23 @@ public class CandidateService {
             candidateSkillsEntity.setSkillsEntity(skillsRepository.findBySkill(skill));
             candidateSkillsRepository.save(candidateSkillsEntity);
         }
+    }
+
+    public float findMatch(FindMatchDTO findMatchDTO) {
+
+        ArrayList<CandidateSkillsEntity> candidateSkillsEntities = candidateSkillsRepository.findAllByCandidateEntity(candidateRepository.findByEmail(findMatchDTO.getCandidateEmail()));
+        ArrayList<JobSkillsEntity> jobSkillsEntities = jobSkillsRepository.findAllByJobEntity(jobRepository.findByRole(findMatchDTO.getJobRole()));
+
+        float count = 0;
+        for(JobSkillsEntity jobskillsEntity : jobSkillsEntities){
+
+            for(CandidateSkillsEntity candidateSkillsEntity : candidateSkillsEntities){
+
+                if(Objects.equals(jobskillsEntity.getSkillsEntity(), candidateSkillsEntity.getSkillsEntity())){
+                    count++;
+                }
+            }
+        }
+        return (count/jobSkillsEntities.size()) * 100;
     }
 }
