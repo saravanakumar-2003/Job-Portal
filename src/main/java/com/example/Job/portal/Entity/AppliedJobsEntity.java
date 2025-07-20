@@ -12,8 +12,7 @@ public class AppliedJobsEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    
-    @OneToOne
+
     @JoinColumn(name = "candidateId" , referencedColumnName = "id")
     private CandidateEntity candidateEntity;
     

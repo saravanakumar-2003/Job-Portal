@@ -22,11 +22,9 @@ public class JobEntity {
     @Column
     private int experience;
 
-    @ManyToOne
     @JoinColumn(name = "companyId" , referencedColumnName = "id")
     private CompanyEntity companyEntity;
 
-    @OneToOne
     @JoinColumn(name = "recruiterId" , referencedColumnName = "id")
     private RecruiterEntity recruiterEntity;
 

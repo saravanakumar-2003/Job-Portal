@@ -14,7 +14,6 @@ public class RecruiterEntity {
     @Column
     private String name;
 
-    @ManyToOne
     @JoinColumn(name = "companyId", referencedColumnName = "id")
     private CompanyEntity company;
 

@@ -10,11 +10,9 @@ public class CandidateSkillsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne
     @JoinColumn(name = "candidateId" , referencedColumnName = "id")
     private CandidateEntity candidateEntity;
 
-    @ManyToOne
     @JoinColumn(name = "skillId" , referencedColumnName = "id")
     private SkillsEntity skillsEntity;
 
